@@ -159,3 +159,7 @@ sudo systemctl restart postgresql
     `https://myserver.example.com/admin/` (Replace `myserver.example.com` with your own host's name.) 
     
 Congratulations, you have installed the Phone Dashboard data collection server.
+
+## Background Jobs Setup
+
+Before your site is ready for use by clients, we have one more **very** important step to complete: setting up the background CRON jobs. Follow [the instructions for Passive Data Kit](https://github.com/audacious-software/PassiveDataKit-Django/#background-jobs-setup).
