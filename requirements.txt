@@ -1,0 +1,4 @@
+-r nagios_monitor/requirements.txt
+-r passive_data_kit/requirements.txt
+
+sorl-thumbnail==12.10.0

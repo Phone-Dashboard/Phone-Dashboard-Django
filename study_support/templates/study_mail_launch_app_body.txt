@@ -1,0 +1,11 @@
+Our server has not received any data from your device in the past 24 hours. Your app might have been accidentally closed - please re-open Phone Dashboard to continue your participation in the study.
+
+If you no longer wish to continue participating in the study, please uninstall Phone Dashboard.
+
+-The Phone Dashboard Team
+
+P.S. If you have uninstalled the app and no longer wish to receive these reminders, visit
+
+{{ site_url }}{% url 'email_opt_out' participant.user_hash %}
+
+to disable the reminders.

@@ -1,0 +1,6 @@
+[submodule "nagios_monitor"]
+	path = nagios_monitor
+	url = https://github.com/audacious-software/Django-Nagios-Monitoring
+[submodule "passive_data_kit"]
+	path = passive_data_kit
+	url = https://github.com/audacious-software/PassiveDataKit-Django

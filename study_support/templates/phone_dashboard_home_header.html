@@ -1,0 +1,109 @@
+{% load passive_data_kit %}
+<div id="study_support"><h3 style="margin: 0px;">Participant Status</h3></div>
+<table id="study_support_table" class="table-striped" data-toolbar="#study_support" data-toggle="table" data-pagination="true" data-search="true" style="z-index: 10;">
+    <thead>
+        <tr>
+            <th data-sortable="true">Participant</th>
+            <th data-sortable="true">Group</th>
+            <th data-sortable="true">Blocker</th>
+            <th data-sortable="true">Usage</th>
+            <th data-sortable="true">Snooze Cost</th>
+            <th data-sortable="true">App Limits</th>
+            <th data-sortable="true">Snoozes</th>
+            <th data-sortable="true">Last Upload</th>
+            <th data-sortable="true">Misc. Issues</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for participant in participants %}
+            {% with report=participant.performance %}
+                <tr>
+                    <td>
+                        {{ participant.identifier }}
+                    </td>
+                    <td>
+                        {{ report.group }}
+                    </td>
+                    <td>
+                        {% if report.phase_type == 'free_snooze' %}
+                            Free
+                        {% else %}
+                            {% if report.phase_type == 'costly_snooze' %}
+                                Costly
+                            {% else %}
+                                {% if report.phase_type == 'no_snooze' %}
+                                    No Snooze
+                                {% else %}
+									{% if report.phase_type == 'none' %}
+										None
+									{% else %}
+										Unknown
+									{% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td {% if report.today_observed_fraction < 0.85 %}class="bg-danger"{% endif %}>
+                        <span style="display: none;">{{ report.today_observed_fraction|floatformat:3 }}</span>
+                        {{ report.today_observed_fraction|pdk_percentage }}
+                    </td>
+                    {% if report.phase_type == 'costly_snooze' %}
+                        {% if report.phase_snooze_cost_overdue %}
+                            <td class="bg-danger">
+                                Overdue
+                            </td>
+                        {% else %}
+                            <td>
+                                OK
+                            </td>
+                        {% endif %}
+                    {% else %}
+                        {% if report.phase_snooze_cost_count > 0 %}
+                            <td class="bg-danger">
+                                Unnecessary Snoozes Set: {{ report.phase_snooze_cost_count }}
+                            </td>
+                        {% else %}
+                            <td>
+                                OK
+                            </td>
+                        {% endif %}
+                    {% endif %}
+                    <td {% if report.phase_budget %}{% else %}{% if report.phase_type == 'free_snooze' %}class="bg-danger"{% endif %}{% if report.phase_type == 'costly_snooze' %}class="bg-danger"{% endif %}{% endif %}>
+                        {% if report.phase_budget %}
+                            {{ report.phase_budget|length }} limit(s)
+                        {% else %}
+                            Not set
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ report.phase_snoozes }}
+                    </td>
+                    <td {% if report.latest_ago > 86400 %}class="bg-danger"{% endif %}>
+                        {% if report.latest_point %}
+                            <span style="display: none;">{{ report.latest_point }}</span>
+                            {% with report.latest_point|to_datetime_from_iso as report_date %}
+                                {% date_ago report_date %} ago
+                            {% endwith %}
+                        {% else %}
+                            <span style="display: none;">9999</span>
+                            None
+                        {% endif %}
+                    </td>
+                    {% if report.phase_misc_issues %}
+                        <td class="bg-danger">
+                            {% for issue in report.phase_misc_issues %}
+                                {{ issue }}<br />
+                            {% endfor %}
+                        </td>
+                    {% else %}
+                        <td>
+                            None
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endwith %}
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr />

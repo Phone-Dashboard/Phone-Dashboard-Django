@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cancel Reminder E-Mails | Phone Usage Study</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </head>
+  <body>
+	<div class="container space-2 space-top-md-2 space-bottom-md-2 space-top-lg-2">
+		<div class="row justify-content-lg-between align-items-lg-center">
+			<div class="col-lg-12 mb-3">
+				{% if user_hash %}
+					{% if cancelled %}
+						<h1>Reminders Cancelled</h1>
+	
+						<p>You will no longer receive email reminders.</p>
+	
+						<p>To re-enable the reminders at any point in the future, please email our team at <a href="mailto:smartphone.research@nyu.edu">smartphone.research@nyu.edu</a>.</p>
+					{% else %}
+						<h1>Cancel Reminder E-Mails?</h1>
+	
+						<p>If you'd like to cancel any future app reminder e-mails, tap/press the button below.</p>
+	
+						<form action="{% url 'email_opt_out' user_hash %}" method="POST">
+							{% csrf_token %}
+			
+							<button type="submit" class="btn btn-primary">Cancel E-Mails</button>
+						</form>
+					{% endif %}
+				{% else %}
+					<h1>Not Found</h1>
+
+					<p>Unable to locate the appropriate user. Please check your link and try again.</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  </body>
+</html>

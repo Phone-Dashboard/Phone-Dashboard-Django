@@ -1,0 +1,1 @@
+There are only {{ count }} app codes remaining for Phone Dashboard users.

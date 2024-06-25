@@ -1,0 +1,11 @@
+Welcome to YouthWell Punjab Dashboard!
+
+When you entered your e-mail address, we generated a unique 8-digit app code to identify you:
+
+{{ participant.identifier }}
+
+You may be asked to enter this code in other surveys, so please save this e-mail.
+
+If you have any questions, feel free to reach out at harshiv.chhabra@ifmr.ac.in. Our team will get back to you within 24 hours.
+
+- The Phone Dashboard Team

@@ -1,0 +1,138 @@
+{% load static %}
+{% load thumbnail %}
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Title -->
+		<title>{% block page_title %}{% endblock %}</title>
+		<!-- <link rel="shortcut icon" href="{% static 'site/favicon.ico' %}"> -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- CSS Implementing Plugins -->
+		<link rel="stylesheet" href="{% static 'front/assets/vendor/font-awesome/css/fontawesome-all.min.css' %}">
+		<link rel="stylesheet" href="{% static 'front/assets/vendor/animate.css/animate.min.css' %}">
+		<link rel="stylesheet" href="{% static 'front/assets/vendor/hs-megamenu/src/hs.megamenu.css' %}">
+		<link rel="stylesheet" href="{% static 'front/assets/vendor/fancybox/jquery.fancybox.css' %}">
+		<link rel="stylesheet" href="{% static 'front/assets/vendor/cubeportfolio/css/cubeportfolio.min.css' %}">
+		<link rel="stylesheet" href="{% static 'front/assets/css/theme.css' %}">
+
+		<!-- ><link rel="apple-touch-icon" sizes="180x180" href="{% static 'site/apple-touch-icon.png' %}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{% static 'site/favicon-32x32.png' %}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{% static 'site/favicon-16x16.png' %}">
+		<link rel="manifest" href="{% static 'site/site.webmanifest' %}">
+		<link rel="mask-icon" href="{% static 'site/safari-pinned-tab.svg' %}" color="#5bbad5">
+		<meta name="apple-mobile-web-app-title" content="ER Alert Website">
+		<meta name="application-name" content="ER Alert Website">
+		<meta name="msapplication-TileColor" content="#df0414">
+		<meta name="theme-color" content="#ffffff"> -->
+	</head>
+	<body>
+		<!-- ========== HEADER ========== -->
+		<header id="header" class="u-header u-header--abs-top-md u-header--bg-transparent">
+			<div class="u-header__section">
+				<div id="logoAndNav" class="container">
+					<!-- Nav -->
+					<nav class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--no-space">
+						<!-- Logo -->
+						<a class="navbar-brand u-header__navbar-brand u-header__navbar-brand-center" href="{% url 'website_home' %}" aria-label="ER Alert">
+							<span class="u-header__navbar-brand-text">Phone Dashboard</span>
+						</a>
+						<!-- End Logo -->
+
+						<!-- Responsive Toggle Button -->
+						<button type="button" class="navbar-toggler btn u-hamburger"
+							aria-label="Toggle navigation"
+							aria-expanded="false"
+							aria-controls="navBar"
+							data-toggle="collapse"
+							data-target="#navBar">
+							<span id="hamburgerTrigger" class="u-hamburger__box">
+								<span class="u-hamburger__inner"></span>
+							</span>
+						</button>
+						<!-- End Responsive Toggle Button -->
+
+						<!-- Navigation -->
+						<div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
+							<ul class="navbar-nav u-header__navbar-nav">
+								<!-- <li class="nav-item">
+									<a class="nav-link u-header__nav-link" href="{% url 'website_privacy' %}">Privacy Policy</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link u-header__nav-link" href="{% url 'website_enroll' %}">How to Enroll</a>
+								</li> -->
+							</ul>
+						</div>
+						<!-- End Navigation -->
+					</nav>
+					<!-- End Nav -->
+				</div>
+			</div>
+		</header>
+		<!-- ========== END HEADER ========== -->
+
+		<!-- ========== MAIN ========== -->
+		<main id="content" role="main">
+			{% block main_content %}{% endblock %}
+		</main>
+
+
+		<!-- ========== FOOTER ========== -->
+		<footer class="bg-dark">
+			<div class="container space-top-2">
+				<div class="row justify-content-lg-between mb-7">
+					<div class="col-8 mb-7 mb-lg-0">
+						<h4 class="h6 text-white">About Phone Dashboard</h4>
+
+						<ul class="list-group list-group-transparent list-group-white list-group-flush list-group-borderless mb-0">
+							<li class="text-white list-group-item">						
+								Phone Dashboard is part of a research study conducted by Professor Hunt Allcott (NYU), Professor Matthew Gentzkow (Stanford), and Lena Song (NYU), and developed with major assistance from Michael Butler.<br />
+								<br />
+								NYU IRB Number: IRB-FY2020-3618
+							</li>
+						</ul>
+					</div>
+
+					<!-- <div class="col-6 col-md-3 col-lg-3 mb-7 mb-lg-0">
+						<h4 class="h6 text-white">Resources</h4>
+
+						<ul class="list-group list-group-transparent list-group-white list-group-flush list-group-borderless mb-0">
+							<li><a class="list-group-item list-group-item-action" href="{% url 'website_privacy' %}">Privacy Policy</a></li>
+							<li><a class="list-group-item list-group-item-action" href="{% url 'website_enroll' %}">How to Enroll</a></li>
+						</ul>
+					</div> -->
+					
+
+					<div class="col-4 mb-7 mb-lg-0">
+						<h4 class="h6 text-white">Contact Us</h4>
+
+						<!-- Address -->
+						<address class="list-group list-group-transparent list-group-white list-group-flush list-group-borderless mb-0">
+						<a class="list-group-item list-group-item-action" href="mailto:smartphone.research@nyu.edu">E-Mail: smartphone.research@nyu.edu</a>
+						</address>
+						<!-- End Address -->
+					</div>
+				</div>
+
+				<!-- <div class="row justify-content-between align-items-center space-1">
+					<div class="col-12 text-right">
+						<p class="small mb-0">&copy; ER Alert. 2019 David T. Liss.</p>
+					</div>
+				</div> -->
+			</div>
+		</footer>
+		<!-- ========== END FOOTER ========== -->
+
+		<!-- JS Global Compulsory -->
+		<!-- <script src="{% static 'front/assets/vendor/jquery/dist/jquery.min.js' %}"></script>
+		<script src="{% static 'front/assets/vendor/jquery-migrate/dist/jquery-migrate.min.js' %}"></script>
+		<script src="{% static 'front/assets/vendor/popper.js/dist/umd/popper.min.js' %}"></script> --?
+		<script src="{% static 'front/assets/vendor/bootstrap/bootstrap.min.js' %}"></script
+
+		<!-- JS Front -->
+		<!-- <script src="{% static 'front/assets/js/hs.core.js' %}"></script> -->
+	</body>
+</html>
+
+

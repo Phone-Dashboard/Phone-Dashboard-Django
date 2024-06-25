@@ -1,0 +1,61 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@2.1.1
+  node: circleci/node@5.1.0
+  browser-tools: circleci/browser-tools@1.4.6
+
+workflows:
+  build:
+    jobs:
+      - build-38
+
+jobs:
+  build-38:
+    docker:
+      - image: cimg/python:3.8
+      - image: cimg/postgres:9.6-postgis
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
+          POSTGRES_PASSWORD: ""
+    steps:
+      - run:
+          name: Install system dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libfreetype6-dev libportmidi-dev libjpeg-dev
+      - checkout
+      - restore_cache:
+          key: venv-38-{{ .Branch }}-{{ checksum "requirements.txt" }}-v1
+      - run:
+          name: Build and validate
+          command: |
+            sudo apt-get update && sudo apt-get install -y gdal-bin
+            python3 -m venv --copies /home/circleci/venv
+            . /home/circleci/venv/bin/activate
+            git submodule init
+            git submodule update
+            pip install --upgrade pip
+            pip install --upgrade wheel
+            pip install -r requirements.txt
+            cp phone_dashboard/circle_settings.py phone_dashboard/local_settings.py
+            python manage.py migrate
+
+            pylint nagios_monitor
+            pylint passive_data_kit
+            pylint study_support
+            pylint website
+            bandit -r .
+      - save_cache:
+          key: venv-38-{{ .Branch }}-{{ checksum "/home/circleci/project/requirements.txt" }}
+          paths:
+            - "/home/circleci/venv"
+      - store_test_results:
+          path: test-results/
+      - store_artifacts:
+          path: test-reports/
+          destination: python_app

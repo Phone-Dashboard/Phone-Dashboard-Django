@@ -1,0 +1,20 @@
+# Sample crontab for deployment
+
+MAILTO=chris@audacious-software.com
+SHELL=/bin/bash
+
+# nyu.audacious-software.com
+* * * * *    source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py pdk_process_bundles --count 1000 
+* * * * *    source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py pdk_compile_reports
+0 7 * * *    source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py study_create_nightly_export_job
+0 4,16 * * *    source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py study_create_violator_export_job
+*/5 * * * *    source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py pdk_compile_visualizations --repeat 2
+*/15 * * * *    source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py pdk_run_status_checks
+*/5 * * * *    source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py pdk_update_performance_metadata
+*/15 * * * *    source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py pdk_update_server_caches
+*/5 * * * *    source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py pdk_update_server_health
+*/5 * * * *    source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py update_participant_data_quality
+0 0 * * *    source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py pdk_clear_processed_bundles
+*/15 * * * *    source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py pdk_nudge_firebase_devices
+* * * * *       source /var/www/django/phone_dashboard/venv/bin/activate && python /var/www/django/phone_dashboard/phone_dashboard/manage.py study_seed_participants
+

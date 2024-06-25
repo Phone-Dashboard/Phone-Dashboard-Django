@@ -1,0 +1,106 @@
+{% extends "pdk_base.html" %}
+{% load static from staticfiles %}
+{% load passive_data_kit %}
+
+{% block 'page_title' %}Treatment Phases | Passive Data Kit{% endblock %}
+
+{% block sidebar %}
+    <ul class="nav nav-sidebar">
+        <li><label>Download App Codes</label></li>
+        <li><a href="{% url 'app_codes_txt' %}"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Tab-Delimited Text</a></li>
+        <li><br /></li>
+        <li><br /></li>
+
+        <li><label>Download Treatment Phases</label></li>
+        <li><a href="{% url 'treatment_phases_txt' %}"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> Tab-Delimited Text</a></li>
+        <li><br /></li>
+        <li><label>Upload</label></li>
+        <li>
+            <p style="padding-left: 20px; padding-right: 20px;">
+                Upload a file in the same format as the download above to add or update treatment phases.<br /><br />
+                Existing treatment phases matching the App Code and Period Start fields will be updated.
+                Where no matching treatment phase exists, a new one will be created.<br /><br />
+                <em>Note that internally, treatment phases do not have explicit end dates set, and the implicit enddate is set by the next treatment phase's start date.
+                Thus, data in the Period End column will be <strong>ignored</strong>.</em>
+            </p>
+        </li>
+        <li></li>
+        <li style="margin-left: 20px; margin-right: 20px;">
+            <form action="{% url 'treatment_phases' %}" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="file" name="file_upload">
+                </div>
+                <button type="submit" class="btn btn-default">Upload</button>
+            </form>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <script data-main="{% static  'pdk/js/basic.js' %}" src="{% static 'pdk/js/lib/require.js' %}"></script>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="sub-header">Treatment Phases</h1> 
+            {% for message in messages %}
+            	{% if message.0 == 'error' %}
+					<div class="alert alert-danger" role="alert">
+						{{ message.1|linebreaksbr }}
+					</div>
+            	{% else %}
+					<div class="alert alert-info" role="alert">
+						{{ message.1|linebreaksbr }}
+					</div>
+            	{% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="phases_table" data-toggle="table" data-pagination="true" data-search="true" style="z-index: 10;">
+                <thead>
+                    <tr>
+                        <th data-sortable="true">App Code</th>
+                        <th data-sortable="true">Period Start</th>
+                        <th data-sortable="true">Period End</th>
+                        <th data-sortable="true">Active</th>
+                        <th data-sortable="true">Receives Subsidy</th>
+                        <th data-sortable="true">Blocker Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for phase in phases %}
+                        <tr>
+                            <td><a href="{% url 'pdk_source' phase.participant.identifier %}">{{ phase.participant.identifier }}</a></td>
+                            <td>
+                                <span style="display: none;">{{ phase.start_date.isoformat }}</span>
+                                {{ phase.start_date }}
+                            </td>
+                            <td>
+                                {% with phase.end_date as end_date %}
+                                    {% if end_date %}
+                                        <span style="display: none;">{{ end_date.isoformat }}</span>
+                                        {{ end_date }}
+                                    {% else %}
+                                        <span style="display: none;">9999999</span>
+                                        None
+                                    {% endif %}
+                                {% endwith %}
+                            </td>
+                            <td>
+                                {{ phase.treatment_active }}
+                            </td>
+                            <td>
+                                {{ phase.receives_subsidy }}
+                            </td>
+                            <td>
+                                {{ phase.blocker_type }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
