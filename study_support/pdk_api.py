@@ -1610,7 +1610,7 @@ def compile_report(generator, sources, data_start=None, data_end=None, date_type
                                     index_date = arrow.get(index_date).shift(days=-1).datetime
 
                 return filename
-            except:
+            except: # pylint: ignore=bare-except
                 traceback.print_exc()
     except: # pylint: disable=bare-except
         print(generator + ': ' + str(sources))
