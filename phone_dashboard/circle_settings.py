@@ -8,19 +8,21 @@ SECRET_KEY = 'CHANGEME' # nosec
 DEBUG = True
 
 ALLOWED_HOSTS = [
-	'*'
+    '*'
 ]
 
 ADMINS = [
-	('Chris Karr', 'chris@audacious-software.com')
+    ('Chris Karr', 'chris@audacious-software.com')
 ]
 
-'default': {
-    'ENGINE': 'django.contrib.gis.db.backends.postgis',
-    'NAME':     'circle_test',
-    'USER':     'root',
-    'PASSWORD': '',
-    'HOST': 'localhost',
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME':     'circle_test',
+        'USER':     'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+    }
 }
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
