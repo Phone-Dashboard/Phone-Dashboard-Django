@@ -5,13 +5,12 @@ import datetime
 
 import arrow
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from passive_data_kit.decorators import handle_lock
-from passive_data_kit.models import ReportJobBatchRequest, DataSource, DataPoint, DataServerMetadatum, LATEST_POINT_DATUM
+from passive_data_kit.models import ReportJobBatchRequest, DataSource
 
 class Command(BaseCommand):
     help = 'Creates a nightly job to upload data to Dropbox.'
